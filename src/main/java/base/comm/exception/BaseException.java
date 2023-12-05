@@ -1,6 +1,5 @@
 package base.comm.exception;
 
-import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
@@ -11,8 +10,6 @@ public class BaseException extends Exception {
 
 	protected String message = null;
 	protected String messageKey = null;
-	protected Object[] messageParameters = null;
-	protected Exception wrappedException = null;
 
 	public String getMessage() {
 		return message;
@@ -22,55 +19,9 @@ public class BaseException extends Exception {
 		this.message = message;
 	}
 
-	public String getMessageKey() {
-		return messageKey;
-	}
-
-	public void setMessageKey(String messageKey) {
-		this.messageKey = messageKey;
-	}
-
-	public Object[] getMessageParameters() {
-		return messageParameters;
-	}
-
-	public void setMessageParameters(Object[] messageParameters) {
-		this.messageParameters = messageParameters;
-	}
-
-	public Throwable getWrappedException() {
-		return wrappedException;
-	}
-
-	public void setWrappedException(Exception wrappedException) {
-		this.wrappedException = wrappedException;
-	}
-
-	public BaseException() {
-		this("BaseException without message", null, null);
-	}
-
-	public BaseException(String defaultMessage) {
-		this(defaultMessage, null, null);
-	}
-
-	public BaseException(Throwable wrappedException) {
-		this("BaseException without message", null, wrappedException);
-	}
-
-	public BaseException(String defaultMessage, Throwable wrappedException) {
-		this(defaultMessage, null, wrappedException);
-	}
-
-	public BaseException(String defaultMessage, Object[] messageParameters, Throwable wrappedException) {
+	public BaseException(String defaultMessage,Throwable wrappedException) {
 		super(wrappedException);
-
-		String userMessage = defaultMessage;
-		if (messageParameters != null) {
-			userMessage = MessageFormat.format(defaultMessage, messageParameters);
-		}
-		
-		this.message = userMessage;
+		this.message = defaultMessage;
 	}
 
 	public BaseException(MessageSource messageSource, String messageKey) {
@@ -101,7 +52,6 @@ public class BaseException extends Exception {
 		super(wrappedException);
 
 		this.messageKey = messageKey;
-		this.messageParameters = messageParameters;
 		this.message = messageSource.getMessage(messageKey, messageParameters, defaultMessage, locale);
 	}
 }

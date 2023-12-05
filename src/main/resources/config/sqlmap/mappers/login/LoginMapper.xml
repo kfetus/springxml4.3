@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="base.login.LoginMapper">
+	<select id="selectOneUserVo" parameterType="base.vo.UserVO" resultType="base.vo.UserVO">
+		SELECT USER_NO
+			, USER_ID
+			, USER_PASS
+			, USER_NAME
+			, USER_IP
+			, DESCRIP
+			, CREATE_DATE
+			, UPDATE_DATE 
+		  FROM LOGIN_INFO
+		 WHERE USER_ID = #{userId}
+		   AND USER_PASS = #{userPass}
+	</select>
+
+    <select id="selectListUserVo" resultType="base.vo.UserVO">
+		SELECT USER_NO
+			, USER_ID
+			, USER_PASS
+			, USER_NAME
+			, USER_IP
+			, DESCRIP
+			, CREATE_DATE
+			, UPDATE_DATE 
+		  FROM LOGIN_INFO
+    </select>
+	
+	<!-- resultMap id="userVoTest" type="base.vo.UserVO">
+		<result column="user_id" property="id" jdbcType="NVARCHAR" javaType="String"/>
+		<result column="user_name" property="username" jdbcType="NVARCHAR" javaType="String"/>
+		<result column="hashed_password" property="hashedPassword" jdbcType="NVARCHAR" javaType="String"/>
+	</resultMap>
+	
+	<select id="selectUsers" resultMap="userVoTest">
+		select user_id, user_name, hashed_password
+		from some_table
+		where id = #{id}
+	</select-->
+</mapper>

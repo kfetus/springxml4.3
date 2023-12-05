@@ -8,50 +8,28 @@ public class BaseException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	protected String message = null;
-	protected String messageKey = null;
-
+	String message;
+	
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public String setMessage(String defaultMessage) {
+		return this.message = defaultMessage;
 	}
 
-	public BaseException(String defaultMessage,Throwable wrappedException) {
-		super(wrappedException);
+	public BaseException(String defaultMessage) {
 		this.message = defaultMessage;
 	}
-
-	public BaseException(MessageSource messageSource, String messageKey) {
-		this(messageSource, messageKey, null, null, Locale.getDefault(), null);
+	
+	public BaseException(String defaultMessage,Throwable throwable) {
+		super(defaultMessage, throwable);
 	}
 
-	public BaseException(MessageSource messageSource, String messageKey, Throwable wrappedException) {
-		this(messageSource, messageKey, null, null, Locale.getDefault(), wrappedException);
-	}
+	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, String defaultMessage, Locale locale, Throwable throwable) {
+		super(throwable);
 
-	public BaseException(MessageSource messageSource, String messageKey, Locale locale, Throwable wrappedException) {
-		this(messageSource, messageKey, null, null, locale, wrappedException);
-	}
-
-	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, Locale locale, Throwable wrappedException) {
-		this(messageSource, messageKey, messageParameters, null, locale, wrappedException);
-	}
-
-	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, Throwable wrappedException) {
-		this(messageSource, messageKey, messageParameters, null, Locale.getDefault(), wrappedException);
-	}
-
-	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, String defaultMessage, Throwable wrappedException) {
-		this(messageSource, messageKey, messageParameters, defaultMessage, Locale.getDefault(), wrappedException);
-	}
-
-	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, String defaultMessage, Locale locale, Throwable wrappedException) {
-		super(wrappedException);
-
-		this.messageKey = messageKey;
+		if(locale == null) locale = Locale.getDefault();
 		this.message = messageSource.getMessage(messageKey, messageParameters, defaultMessage, locale);
 	}
 }

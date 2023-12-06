@@ -9,6 +9,8 @@
 				, CATEGORY
 				, TITLE
 				, BODY_TEXT
+				, ORIGIN_TEXT
+				, ORDER_NUM
 				, REG_ID
 				, REG_DT
 				, CNG_DT
@@ -26,6 +28,8 @@
 				, CATEGORY
 				, TITLE
 				, BODY_TEXT
+				, ORIGIN_TEXT
+				, ORDER_NUM
 				, REG_ID
 				, REG_DT
 				, CNG_DT
@@ -40,6 +44,8 @@
 			, CATEGORY
 			, TITLE
 			, BODY_TEXT
+			, ORIGIN_TEXT
+			, ORDER_NUM
 			, REG_ID
 			, REG_DT
 			, CNG_DT
@@ -49,6 +55,8 @@
 			, #{category}
 			, #{title}
 			, #{bodyText}
+			, #{originNum}
+			, #{orderNum}
 			, #{regId}
 			, SYSDATE
 			, SYSDATE

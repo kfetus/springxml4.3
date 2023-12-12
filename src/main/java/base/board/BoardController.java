@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.SessionManager;
+import base.vo.UserVO;
 
 @Controller
 @ResponseBody
@@ -67,6 +68,64 @@ public class BoardController {
 		LOGGER.debug("@@@@@@@@@@@ selectBoardOne 종료"+retMap);
 		return retMap;
 	}
-
 	
+	@RequestMapping(value = "/insertBoardOne.do")
+	public Map<String,Object> insertBoardOne(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ insertBoardOne 시작=" + map);
+		Map<String , Object> retMap = new HashMap<String,Object>();
+		
+		UserVO vo = sessionManager.getUserInfo(req);
+		if (vo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			return retMap;
+		}
+		
+		int result = boardService.insertBoardOne(map);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_CNT",result);
+
+		LOGGER.debug("@@@@@@@@@@@ insertBoardOne 종료"+retMap);
+		return retMap;
+	}
+	
+	
+	@RequestMapping(value = "/updateBoardOne.do")
+	public Map<String,Object> updateBoardOne(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 시작=" + map);
+		Map<String , Object> retMap = new HashMap<String,Object>();
+		
+		UserVO vo = sessionManager.getUserInfo(req);
+		if (vo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			return retMap;
+		}
+		
+		int result = boardService.updateBoardOne(map);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_CNT",result);
+
+		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 종료"+retMap);
+		return retMap;
+	}
+	
+	@RequestMapping(value = "/deleteBoardOne.do")
+	public Map<String,Object> deleteBoardOne(@RequestBody  HashMap<String,String> map) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 시작=" + map);
+		Map<String , Object> retMap = new HashMap<String,Object>();
+		String key = map.get("seq");
+		int result = boardService.deleteBoardOne(key);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_CNT",result);
+
+		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 종료"+retMap);
+		return retMap;
+	}
 }

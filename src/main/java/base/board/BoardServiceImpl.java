@@ -17,7 +17,7 @@ public class BoardServiceImpl {
 	private BoardMapper boardMapper;
 
 	public int insertBoardOne(HashMap<String,String> map) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@@@ data=" + map);
+		LOGGER.debug("@@@@@@@@@@@@@ insertBoardOne data=" + map);
 		int result = boardMapper.insertBoardOne(map);
 		return result;
 	}
@@ -32,9 +32,9 @@ public class BoardServiceImpl {
 		return result;
 	}
 
-	public int updateBoardOne(String seq) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@@@ key=" + seq);
-		int result = boardMapper.updateBoardOne(seq);
+	public int updateBoardOne(HashMap<String,String> map) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ updateBoardOne map=" + map);
+		int result = boardMapper.updateBoardOne(map);
 		return result;
 	}
 	

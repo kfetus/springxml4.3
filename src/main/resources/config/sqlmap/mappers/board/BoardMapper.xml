@@ -31,7 +31,7 @@
 				, ORIGIN_TEXT
 				, ORDER_NUM
 				, REG_ID
-				, REG_DT
+				, DATE_FORMAT(REG_DT, '%Y-%m-%d') REG_DT
 				, CNG_DT
 		  FROM MAIN_BOARD
 		 WHERE SEQ = #{seq}

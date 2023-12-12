@@ -32,6 +32,13 @@
 
 		}
 	
+		function fn_scriptTest() {
+			const initialState = [{count: 0},'dddd'];
+			const [a,b] = initialState;
+			console.log(a);
+			console.log(a.count);
+			console.log(b);
+		}
 	
 	</script>
 </head>
@@ -57,6 +64,7 @@
 			본문
 			<button type="button" id="s1" onclick="javascript:fn_selectList('/sampleRest.do');"><span><strong>샘플</strong></span></button>
 			<button type="button" id="s2" onclick="javascript:fn_selectList('/restBaseModel.do');">기본</button>
+			<button type="button" id="s2" onclick="javascript:fn_scriptTest();">스크립트테스트</button>
 		</div>
 		<div>
 			<p>box 1</p>

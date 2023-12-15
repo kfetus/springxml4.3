@@ -40,12 +40,12 @@ public class LoginController {
 		LOGGER.debug("@@@@@@@@@@@ restLogin 시작="+vo.toString());
 		Map<String , Object> retMap = new HashMap<String,Object>();
 		
-		if( StringUtils.hasText(vo.getUserId())) {
+		if( !StringUtils.hasText(vo.getUserId())) {
 			retMap.put("RESCODE","9999");
 			retMap.put("RESMSG","아이디가 없습니다.");
 			return retMap;
 		}
-		if (StringUtils.hasText(vo.getUserPass()) ) {
+		if (!StringUtils.hasText(vo.getUserPass()) ) {
 			retMap.put("RESCODE","9999");
 			retMap.put("RESMSG","패스워드가 없습니다.");
 			return retMap;

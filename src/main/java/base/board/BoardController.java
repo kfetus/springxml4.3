@@ -119,8 +119,8 @@ public class BoardController {
 	public Map<String,Object> deleteBoardOne(@RequestBody  HashMap<String,String> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 시작=" + map);
 		Map<String , Object> retMap = new HashMap<String,Object>();
-		String key = map.get("seq");
-		int result = boardService.deleteBoardOne(key);
+		String seq = map.get("SEQ");
+		int result = boardService.deleteBoardOne(seq);
 
 		retMap.put("RESCODE","0000");
 		retMap.put("RESMSG","");

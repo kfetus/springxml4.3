@@ -9,7 +9,7 @@
 				, CATEGORY
 				, TITLE
 				, BODY_TEXT
-				, ORIGIN_TEXT
+				, ORIGIN_BOARD_SEQ
 				, ORDER_NUM
 				, REG_ID
 				, REG_DT
@@ -28,7 +28,7 @@
 				, CATEGORY
 				, TITLE
 				, BODY_TEXT
-				, ORIGIN_TEXT
+				, ORIGIN_BOARD_SEQ
 				, ORDER_NUM
 				, REG_ID
 				, DATE_FORMAT(REG_DT, '%Y-%m-%d') REG_DT
@@ -44,22 +44,22 @@
 			, CATEGORY
 			, TITLE
 			, BODY_TEXT
-			, ORIGIN_TEXT
+			, ORIGIN_BOARD_SEQ
 			, ORDER_NUM
 			, REG_ID
 			, REG_DT
 			, CNG_DT
 			)
 		VALUES(
-			BOARD_SEQ.NEXTVAL
+			nextval(BOARD_SEQ)
 			, #{category}
 			, #{title}
 			, #{bodyText}
-			, #{originNum}
+			, #{originBoardSeq}
 			, #{orderNum}
 			, #{regId}
-			, SYSDATE
-			, SYSDATE
+			, CURRENT_TIMESTAMP()
+			, CURRENT_TIMESTAMP()
 			)
 	</insert>    
 

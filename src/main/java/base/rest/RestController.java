@@ -23,6 +23,7 @@ public class RestController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RestController.class);
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sampleRest.do")
 	public String sampleRest(HttpServletRequest req, @RequestBody Map<String, Object> map) {
 		LOGGER.debug("@@@@@@@@@@@@@@@@@@"+req.getParameterMap());

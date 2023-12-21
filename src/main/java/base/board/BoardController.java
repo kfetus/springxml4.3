@@ -78,6 +78,7 @@ public class BoardController {
 		if (vo == null) {
 			retMap.put("RESCODE","9998");
 			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
 			return retMap;
 		}
 		

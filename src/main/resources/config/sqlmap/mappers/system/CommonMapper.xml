@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="base.comm.system.SystemSetMapper">
+
+   <select id="selectMenuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		WITH RECURSIVE menu AS (
+			SELECT URL
+				, PARENT_URL
+				, MENU_NAME
+				, 1 AS LEVEL
+			  FROM SYSTEM_MENU
+			 WHERE USE_YN = 'Y'
+			   AND URL = '/'
+			UNION ALL
+			SELECT A.URL
+				, A.PARENT_URL
+				, A.MENU_NAME
+				, 1 + LEVEL AS LEVEL
+			  FROM SYSTEM_MENU A
+			 INNER JOIN menu ON A.PARENT_URL = menu.URL
+			 WHERE A.USE_YN = 'Y'
+		)
+		SELECT URL
+			, PARENT_URL
+			, MENU_NAME
+			, LEVEL
+		FROM menu
+    </select>
+
+</mapper>

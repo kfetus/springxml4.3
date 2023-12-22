@@ -3,7 +3,7 @@
  
 <mapper namespace="base.login.LoginMapper">
 	<select id="selectOneUserVo" parameterType="base.vo.UserVO" resultType="base.vo.UserVO">
-		SELECT USER_NO
+		SELECT USER_NO /* LoginMapper.selectOneUserVo 사용자 조회 */
 			, USER_ID
 			, USER_PASS
 			, USER_NAME

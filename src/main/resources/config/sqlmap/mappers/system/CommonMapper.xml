@@ -4,7 +4,7 @@
 <mapper namespace="base.comm.system.SystemSetMapper">
 
    <select id="selectMenuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		WITH RECURSIVE menu AS (
+		WITH RECURSIVE menu AS ( /* SystemSetMapper.selectMenuList 메뉴 조회 */
 			SELECT URL
 				, PARENT_URL
 				, MENU_NAME
@@ -27,5 +27,19 @@
 			, LEVEL
 		FROM menu
     </select>
+<!-- 
+		SELECT /* MenuMapper.selectMenuList 메뉴 조회 */
+				LEVEL
+				, URL
+				, MENU_NAME
+				, ORDER_NUM 
+		  FROM MENU
+		 WHERE USE_YN = 'Y' 
+		   AND TARGET_SYS_GROUP = 'APP'
+		 START WITH PARENT_URL = 'R'
+		CONNECT BY PRIOR URL = PARENT_URL
+		ORDER SIBLINGS BY ORDER_NUM
+ -->
+
 
 </mapper>

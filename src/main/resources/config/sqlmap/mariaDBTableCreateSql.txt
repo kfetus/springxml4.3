@@ -50,27 +50,30 @@ ENGINE=InnoDB
 ;
 
 
-
-
-CREATE TABLE `MENU` (
+CREATE TABLE `system_menu` (
 	`URL` VARCHAR(100) NOT NULL COMMENT '메뉴  URL' COLLATE 'utf8mb4_bin',
-	`SYS_GROUP` VARCHAR(3) NOT NULL COMMENT '시스템 그룹 WEB ,APP' COLLATE 'utf8mb4_bin',
+	`SYS_GROUP` VARCHAR(3) NOT NULL COMMENT '시스템 그룹 PCW , MOW, APP' COLLATE 'utf8mb4_bin',
 	`PARENT_URL` VARCHAR(100) NOT NULL COMMENT '부모 URL R:root' COLLATE 'utf8mb4_bin',
 	`MENU_NAME` VARCHAR(200) NOT NULL COMMENT '메뉴명' COLLATE 'utf8mb4_bin',
-	`MENU_TYPE` VARCHAR(2) NOT NULL COMMENT '메뉴 타입 01:NEW 02:추천 05:일반' COLLATE 'utf8mb4_bin',
 	`MENU_LEVEL` VARCHAR(2) NOT NULL COMMENT '레벨' COLLATE 'utf8mb4_bin',
-	`ORDER_NUM` VARCHAR(2) NOT NULL COMMENT '정렬순서' COLLATE 'utf8mb4_bin',
-	`USE_YN` CHAR(1) DEFAULT 'Y' COMMENT '사용여부' COLLATE 'utf8mb4_bin',
-	`TARGET_SYS_GROUP` VARCHAR(3) NOT NULL COMMENT '대상 시스템 그룹' COLLATE 'utf8mb4_bin',
+	`ORDER_NUM` INT(10) NOT NULL DEFAULT '0' COMMENT '정렬순서',
+	`USE_YN` CHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부' COLLATE 'utf8mb4_bin',
 	`REG_ID` INT(20) NULL DEFAULT NULL COMMENT '등록자ID',
 	`REG_DT` DATETIME NULL DEFAULT current_timestamp() COMMENT '생성일',
 	`CNG_DT` DATETIME NULL DEFAULT current_timestamp() COMMENT '수정일',
-	PRIMARY KEY (`URL`,`SYS_GROUP`) USING BTREE
+	PRIMARY KEY (`URL`, `SYS_GROUP`) USING BTREE
 )
 COMMENT='메뉴'
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
+
+INSERT INTO `system_menu` (`URL`, `SYS_GROUP`, `PARENT_URL`, `MENU_NAME`, `MENU_LEVEL`, `ORDER_NUM`, `USE_YN`, `REG_ID`, `REG_DT`, `CNG_DT`) VALUES
+	('/', 'MOW', 'ROOT', '앱 홈', '0', 1, 'Y', NULL, '2023-12-21 17:35:01', '2023-12-21 17:35:01'),
+	('/boardEdit', 'MOW', '/boardList', '게시판 수정화면', '1', 1, 'Y', NULL, '2023-12-21 17:48:33', '2023-12-21 17:48:33'),
+	('/boardList', 'MOW', '/', '게시판', '1', 1, 'Y', NULL, '2023-12-21 17:36:52', '2023-12-21 17:36:52'),
+	('/login', 'MOW', '/', '로그인', '1', 1, 'Y', NULL, '2023-12-21 17:39:46', '2023-12-21 17:39:46');
+
 
 
 CREATE TABLE `code` (

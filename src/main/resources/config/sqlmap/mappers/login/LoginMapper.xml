@@ -9,8 +9,8 @@
 			, USER_NAME
 			, USER_IP
 			, DESCRIP
-			, CREATE_DATE
-			, UPDATE_DATE 
+			, REG_DT
+			, CNG_DT 
 		  FROM LOGIN_INFO
 		 WHERE USER_ID = #{userId}
 		   AND USER_PASS = #{userPass}
@@ -23,8 +23,8 @@
 			, USER_NAME
 			, USER_IP
 			, DESCRIP
-			, CREATE_DATE
-			, UPDATE_DATE 
+			, REG_DT
+			, CNG_DT 
 		  FROM LOGIN_INFO
     </select>
 	

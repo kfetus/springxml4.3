@@ -1,17 +1,17 @@
 package base.user;
 
-import java.util.HashMap;
-
 import org.apache.ibatis.annotations.Mapper;
+
+import base.vo.UserVO;
 
 @Mapper
 public interface UserInfoMapper {
 
-	public HashMap<String,String> selectUserInfoOne(String seq);
+	public UserVO selectUserInfoOne(String userNo);
 
-	public int insertUserInfoOne(HashMap<String,String> map);
+	public int insertUserInfoOne(UserVO vo);
 	
-	public int updateUserInfoOne(HashMap<String,String> map);
+	public int updateUserInfoOne(UserVO vo);
 	
-	public int deleteUserInfoOne(String seq);
+	public int deleteUserInfoOne(String userNo);
 }

@@ -3,17 +3,23 @@
  
 <mapper namespace="base.login.LoginMapper">
 	<select id="selectOneUserVo" parameterType="base.vo.UserVO" resultType="base.vo.UserVO">
-		SELECT USER_NO /* LoginMapper.selectOneUserVo 사용자 조회 */
-			, USER_ID
-			, USER_PASS
-			, USER_NAME
-			, USER_IP
-			, DESCRIP
-			, REG_DT
-			, CNG_DT 
-		  FROM LOGIN_INFO
-		 WHERE USER_ID = #{userId}
-		   AND USER_PASS = #{userPass}
+		SELECT A.USER_NO /* LoginMapper.selectOneUserVo 사용자 조회 */
+			, A.USER_ID
+			, A.USER_PASS
+			, A.USER_NAME
+			, A.USER_IP
+			, A.DESCRIP
+			, A.REG_DT
+			, A.CNG_DT 
+			, B.HP_NO
+			, B.EMAIL
+			, B.ZONE_CODE
+			, B.ROAD_ADDR
+			, B.JIBUN_ADDR
+			, B.DETAIL_ADDR
+		FROM login_info A INNER JOIN user_info B ON A.USER_NO = B.USER_NO
+	   WHERE USER_ID = #{userId}
+		 AND USER_PASS = #{userPass}
 	</select>
 
     <select id="selectListUserVo" resultType="base.vo.UserVO">

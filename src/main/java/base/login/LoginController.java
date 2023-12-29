@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,7 +61,7 @@ public class LoginController {
 			retMap.put("RESCODE","0000");
 			retMap.put("RESMSG","");
 //			vo.setUserIp((null != req.getHeader("X-FORWARDED-FOR")) ? req.getHeader("X-FORWARDED-FOR") : req.getRemoteAddr());
-			
+			vo2.setUserPass("");
 			retMap.put("userInfo", vo2);
 			
 			sessionManager.createUserInfo(req, vo2);
@@ -82,7 +81,7 @@ public class LoginController {
 		return map;
 	}
 
-	@GetMapping(value = "/checkUser.do")
+	@RequestMapping(value = "/checkUser.do")
 	public Map<String,Object> checkUser(HttpServletRequest req) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ checkUser 시작=");
 		
@@ -92,8 +91,9 @@ public class LoginController {
 				
 		UserVO vo = (UserVO)sessionManager.getUserInfo(req);
 		if( vo != null) {
-			LOGGER.debug("@@@@@@@@@@@"+vo.toString());	
+			LOGGER.debug("@@@@@@@@@@@ 로그인 사용자 정보:"+vo.toString());	
 		}
+		retMap.put("userInfo", vo);
 		LOGGER.debug("@@@@@@@@@@@ checkUser 종료");
 		return retMap;
 	}

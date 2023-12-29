@@ -4,10 +4,11 @@
 <mapper namespace="base.user.UserInfoMapper">
 
 
-	<select id="selectUserInfoOne" parameterType="String" resultType="java.util.HashMap">
+	<select id="selectUserInfoOne" parameterType="String" resultType="base.vo.UserVO">
 		SELECT /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
 				USER_NO
 				, EMAIL
+				, HP_NO
 				, ZONE_CODE
 				, ROAD_ADDR
 				, JIBUN_ADDR
@@ -16,10 +17,11 @@
 		 WHERE USER_NO =  #{userNo}
 	</select>
     
-	<insert id="insertUserInfoOne" parameterType="java.util.HashMap">
+	<insert id="insertUserInfoOne" parameterType="base.vo.UserVO">
 		INSERT /* UserInfoMapper.insertUserInfoOne 사용자 정보 Insert */
 		INTO USER_INFO(
 			USER_NO
+			, HP_NO
 			, EMAIL
 			, ZONE_CODE
 			, ROAD_ADDR
@@ -31,6 +33,7 @@
 			)
 		VALUES(
 			, #{userNo}
+			, #{hpNo}
 			, #{email}
 			, #{zoneCode}
 			, #{roadAddr}
@@ -42,9 +45,10 @@
 			)
 	</insert>    
 
-	<update id="updateUserInfoOne">
+	<update id="updateUserInfoOne" parameterType="base.vo.UserVO">
 		UPDATE USER_INFO /* UserInfoMapper.updateUserInfoOne 사용자 정보 Update */
-		SET    EMAIL = #{email}
+		SET    HP_NO = #{hpNo}
+			   , EMAIL = #{email}
 			   , ZONE_CODE  = #{zoneCode}
 		       , ROAD_ADDR     = #{roadAddr}
 		       , JIBUN_ADDR = #{jibunAddr}

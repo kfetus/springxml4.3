@@ -5,16 +5,20 @@
 
 
 	<select id="selectUserInfoOne" parameterType="String" resultType="base.vo.UserVO">
-		SELECT /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
-				USER_NO
-				, EMAIL
-				, HP_NO
-				, ZONE_CODE
-				, ROAD_ADDR
-				, JIBUN_ADDR
-				, DETAIL_ADDR
-		  FROM USER_INFO
-		 WHERE USER_NO =  #{userNo}
+		SELECT A.USER_NO /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
+			, B.USER_NAME
+			, B.USER_IP
+			, B.DESCRIP
+			, B.REG_DT
+			, B.CNG_DT 
+			, A.HP_NO
+			, A.EMAIL
+			, A.ZONE_CODE
+			, A.ROAD_ADDR
+			, A.JIBUN_ADDR
+			, A.DETAIL_ADDR
+		FROM user_info A INNER JOIN login_info B ON A.USER_NO = B.USER_NO
+		WHERE A.USER_NO =  #{userNo}
 	</select>
     
 	<insert id="insertUserInfoOne" parameterType="base.vo.UserVO">

@@ -76,12 +76,19 @@ public class UserInfoController {
 
 	
 	@RequestMapping(value = "/userInfoOne.do")
-	public Map<String,Object> selectUserInfoOne(@RequestBody  HashMap<String,String> map) throws Exception {
+	public Map<String,Object> selectUserInfoOne(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ selectBoardOne 시작=" + map);
 		Map<String , Object> retMap = new HashMap<String,Object>();
+
+		UserVO loginVo = sessionManager.getUserInfo(req);
+		if (loginVo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			return retMap;
+		}
 		
-		String userNo = map.get("userNo");
-		
+//		String userNo = map.get("userNo");
+		String userNo = loginVo.getUserNo();
 		UserVO vo = userInfoService.selectUserInfoOne(userNo);
 
 		retMap.put("RESCODE","0000");

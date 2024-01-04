@@ -7,6 +7,8 @@ import base.vo.UserVO;
 @Mapper
 public interface UserInfoMapper {
 
+	public int checkDupIdOne(UserVO vo);
+	
 	public UserVO selectUserInfoOne(String userNo);
 
 	public int insertUserInfoOne(UserVO vo);

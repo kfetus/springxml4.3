@@ -29,6 +29,32 @@ public class UserInfoController {
 	@Autowired
 	private UserInfoServiceImpl userInfoService;
 
+	@RequestMapping(value = "/checkDupId.do")
+	public Map<String,Object> checkDupIdOne(@RequestBody UserVO vo) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ updateUserInfoOne 시작=" + vo.toString());
+		Map<String , Object> retMap = new HashMap<String,Object>();
+
+		if( !StringUtils.hasText(vo.getUserId())) {
+			retMap.put("RESCODE","9999");
+			retMap.put("RESMSG","아이디가 없습니다.");
+			return retMap;
+		}
+		if (!StringUtils.hasText(vo.getUserPass()) ) {
+			retMap.put("RESCODE","9999");
+			retMap.put("RESMSG","패스워드가 없습니다.");
+			return retMap;
+		}
+		
+		int result = userInfoService.checkDupIdOne(vo);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_CNT",result);
+
+		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 종료"+retMap);
+		return retMap;
+	}
+	
 	/**
 	 * 
 	 * @설명 : 회원 가입 

@@ -15,6 +15,13 @@ public class UserInfoServiceImpl {
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 
+	
+	public int checkDupIdOne(UserVO vo) throws Exception {
+		int cnt = userInfoMapper.checkDupIdOne(vo);
+		return cnt;
+	}
+	
+	
 	public int insertUserInfoOne(UserVO vo) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ insertUserInfoOne data=" + vo.toString());
 		int result = userInfoMapper.insertUserInfoOne(vo);

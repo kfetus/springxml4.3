@@ -3,6 +3,18 @@
  
 <mapper namespace="base.user.UserInfoMapper">
 
+	<select id="checkDupIdOne" parameterType="base.vo.UserVO" resultType="int">
+		SELECT A.USER_NO /* UserInfoMapper.selectUserInfoOne 아이디 중복 조회 */
+				, A.USER_ID
+				, A.USER_PASS
+				, A.USER_NAME
+				, A.USER_IP
+				, A.DESCRIP
+				, A.REG_DT
+				, A.CNG_DT 
+			FROM login_info A 
+		  WHERE USER_ID = #{userId} 
+	</select>
 
 	<select id="selectUserInfoOne" parameterType="String" resultType="base.vo.UserVO">
 		SELECT A.USER_NO /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */

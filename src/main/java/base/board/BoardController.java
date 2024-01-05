@@ -82,7 +82,7 @@ public class BoardController {
 			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
 			return retMap;
 		} else {
-			map.put("regId",vo.getUserNo()+"");
+			map.put("userNo",vo.getUserNo()+"");
 		}
 		
 		int result = boardService.insertBoardOne(map);

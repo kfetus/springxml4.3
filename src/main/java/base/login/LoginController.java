@@ -91,7 +91,10 @@ public class LoginController {
 				
 		UserVO vo = (UserVO)sessionManager.getUserInfo(req);
 		if( vo != null) {
-			LOGGER.debug("@@@@@@@@@@@ 로그인 사용자 정보:"+vo.toString());	
+			LOGGER.debug("@@@@@@@@@@@ 로그인 사용자 정보:"+vo.toString());
+			retMap.put("loginYn","Y");
+		} else {
+			retMap.put("loginYn","N");
 		}
 		retMap.put("userInfo", vo);
 		LOGGER.debug("@@@@@@@@@@@ checkUser 종료");

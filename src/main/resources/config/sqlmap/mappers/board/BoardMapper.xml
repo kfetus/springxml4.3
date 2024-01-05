@@ -62,7 +62,7 @@
 			, #{bodyText}
 			, #{originBoardSeq}
 			, #{orderNum}
-			, #{regId}
+			, #{userNo}
 			, CURRENT_TIMESTAMP()
 			, CURRENT_TIMESTAMP()
 			)

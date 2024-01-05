@@ -114,7 +114,7 @@ public class UserInfoController {
 		}
 		
 //		String userNo = map.get("userNo");
-		String userNo = loginVo.getUserNo();
+		int userNo = loginVo.getUserNo();
 		UserVO vo = userInfoService.selectUserInfoOne(userNo);
 
 		retMap.put("RESCODE","0000");

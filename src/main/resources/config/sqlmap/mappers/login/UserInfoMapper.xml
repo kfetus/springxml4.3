@@ -41,7 +41,7 @@
 			, CNG_DT
 			)
 		VALUES(
-			, #{userNo}
+			 #{userNo}
 			, #{hpNo}
 			, #{email}
 			, #{zoneCode}

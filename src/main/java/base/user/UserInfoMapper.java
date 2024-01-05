@@ -9,11 +9,11 @@ public interface UserInfoMapper {
 
 	public int checkDupIdOne(UserVO vo);
 	
-	public UserVO selectUserInfoOne(String userNo);
+	public UserVO selectUserInfoOne(int userNo);
 
 	public int insertUserInfoOne(UserVO vo);
 	
 	public int updateUserInfoOne(UserVO vo);
 	
-	public int deleteUserInfoOne(String userNo);
+	public int deleteUserInfoOne(int userNo);
 }

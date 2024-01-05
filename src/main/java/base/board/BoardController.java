@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,6 +81,8 @@ public class BoardController {
 			retMap.put("RESMSG","로그인 정보가 없습니다.");
 			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
 			return retMap;
+		} else {
+			map.put("regId",vo.getUserNo()+"");
 		}
 		
 		int result = boardService.insertBoardOne(map);
@@ -116,10 +119,32 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/deleteBoardOne.do")
-	public Map<String,Object> deleteBoardOne(@RequestBody  HashMap<String,String> map) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@ updateBoardOne 시작=" + map);
+	public Map<String,Object> deleteBoardOne(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ deleteBoardOne 시작=" + map);
 		Map<String , Object> retMap = new HashMap<String,Object>();
+
 		String seq = map.get("SEQ");
+		String userNo = StringUtils.trimWhitespace(map.get("userNo"));
+		
+		UserVO vo = sessionManager.getUserInfo(req);
+		
+		if (vo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
+			return retMap;
+		} else {
+			int tempUserNo = Integer.parseInt(userNo);
+			LOGGER.debug("@@@@@@@@@@@ deleteBoardOne tempUserNo=" + tempUserNo+"|"+userNo+"|");
+			LOGGER.debug("@@@@@@@@@@@ deleteBoardOne userNo=" + ( tempUserNo != vo.getUserNo() ));
+
+			if ( tempUserNo != vo.getUserNo() ) {
+				retMap.put("RESCODE","9997");
+				retMap.put("RESMSG","삭제 권한이 없습니다.");
+				return retMap;
+			}
+		}		
+		
 		int result = boardService.deleteBoardOne(seq);
 
 		retMap.put("RESCODE","0000");

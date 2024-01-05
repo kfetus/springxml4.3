@@ -5,7 +5,7 @@ public class UserVO {
 	private String userId;
 	private String userPass;
 	private String userName;
-	private String userNo;
+	private int userNo;
 	private String userIp;
 	private String descrip;
 	
@@ -16,6 +16,7 @@ public class UserVO {
 	private String jibunAddr;
 	private String detailAddr;
 	
+	private String regId;
 	
 	public String getDescrip() {
 		return descrip;
@@ -47,10 +48,10 @@ public class UserVO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 	
@@ -90,11 +91,18 @@ public class UserVO {
 	public void setDetailAddr(String detailAddr) {
 		this.detailAddr = detailAddr;
 	}
+	public String getRegId() {
+		return regId;
+	}
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userPass=" + userPass + ", userName=" + userName + ", userNo=" + userNo
 				+ ", userIp=" + userIp + ", descrip=" + descrip + ", hpNo=" + hpNo + ", email=" + email + ", zoneCode="
-				+ zoneCode + ", roadAddr=" + roadAddr + ", jibunAddr=" + jibunAddr + ", detailAddr=" + detailAddr + "]";
+				+ zoneCode + ", roadAddr=" + roadAddr + ", jibunAddr=" + jibunAddr + ", detailAddr=" + detailAddr
+				+ ", regId=" + regId + "]";
 	}
 	
 

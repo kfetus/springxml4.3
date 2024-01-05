@@ -12,7 +12,7 @@
 				, A.BODY_TEXT
 				, A.ORIGIN_BOARD_SEQ
 				, A.ORDER_NUM
-				, A.REG_ID
+				, A.USER_NO
 				, A.REG_DT
 				, DATE_FORMAT(A.CNG_DT, '%Y-%m-%d %H:%i:%s') CNG_DT
 		  FROM MAIN_BOARD A , CODE B
@@ -33,7 +33,7 @@
 				, A.BODY_TEXT
 				, A.ORIGIN_BOARD_SEQ
 				, A.ORDER_NUM
-				, A.REG_ID
+				, A.USER_NO
 				, DATE_FORMAT(A.REG_DT, '%Y-%m-%d') REG_DT
 				, A.CNG_DT
 		  FROM MAIN_BOARD A , CODE B
@@ -51,7 +51,7 @@
 			, BODY_TEXT
 			, ORIGIN_BOARD_SEQ
 			, ORDER_NUM
-			, REG_ID
+			, USER_NO
 			, REG_DT
 			, CNG_DT
 			)

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.HttpUtil;
 import base.util.SessionManager;
 import base.vo.UserVO;
 
@@ -90,6 +91,8 @@ public class UserInfoController {
 			return retMap;
 		}
 
+		vo.setUserIp(HttpUtil.getClientIp(req));
+		LOGGER.debug("@@@@@@@@@@@ insertUserInfoOne insert data=" + vo.toString());
 		int result = userInfoService.insertUserInfoOne(vo);
 
 		retMap.put("RESCODE","0000");

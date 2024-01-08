@@ -19,7 +19,7 @@
 		  WHERE A.CATEGORY = B.CODE
 		   AND B.CODE_TYPE = 'BOARD'
 			<if test="seq != null and seq != '' ">AND A.SEQ = #{seq}</if>
-			<if test="title != null and title != '' ">AND A.TITLE LIKE #{title}</if>
+			<if test="title != null and title != '' ">AND A.TITLE LIKE CONCAT('%',#{title},'%')</if>
 			<if test="category != null and category != '' ">AND A.CATEGORY = #{category}</if>
 		ORDER BY SEQ
     </select>

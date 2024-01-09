@@ -108,6 +108,18 @@ public class BoardController {
 			return retMap;
 		}
 		
+		String seq = map.get("seq");
+		HashMap<String,String> resultData = boardService.selectBoardOne(seq);
+		String userNo = String.valueOf(resultData.get("USER_NO"));
+
+		int tempUserNo = Integer.parseInt(userNo);
+
+		if ( tempUserNo != vo.getUserNo() ) {
+			retMap.put("RESCODE","9997");
+			retMap.put("RESMSG","수정 권한이 없습니다.");
+			return retMap;
+		}		
+		
 		int result = boardService.updateBoardOne(map);
 
 		retMap.put("RESCODE","0000");

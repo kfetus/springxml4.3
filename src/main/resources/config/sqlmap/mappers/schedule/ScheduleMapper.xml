@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="base.schedule.ScheduleMapper">
+
+	<select id="selectScheduleList" parameterType="String" resultType="java.util.HashMap">
+		SELECT S.CAL_DAY /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
+				, S.DOW 
+				, CASE WHEN S.DOW=1 THEN '일요일'
+				      WHEN S.DOW=2 THEN '월요일'
+				      WHEN S.DOW=3 THEN '화요일'
+				      WHEN S.DOW=4 THEN '수요일'
+				      WHEN S.DOW=5 THEN '목요일'
+				      WHEN S.DOW=6 THEN '금요일'
+				      WHEN S.DOW=7 THEN '토요일'
+				 ELSE '' END AS DAY
+				, GROUP_CONCAT(S.SCHEDULE) AS SC
+		  FROM (
+				SELECT A.CAL_DAY
+					, DAYOFWEEK( DATE_FORMAT(A.CAL_DAY,'%Y%m%d')) AS DOW
+					, S.YYYYMMDD
+					, CONCAT( S.HH	,":", S.MM ," ", S.SCHEDULE) AS SCHEDULE
+				  FROM (
+						WITH RECURSIVE T AS (
+							SELECT DATE_FORMAT(#{yyyymmdd}, '%Y%m01') as CAL_DAY
+							UNION ALL
+							SELECT CAL_DAY + 1 FROM T WHERE DATE_FORMAT(CAL_DAY, '%Y%m%d') &lt; LAST_DAY(DATE_FORMAT(#{yyyymmdd}, '%Y%m%d'))
+						)
+						SELECT * FROM T
+				  ) A LEFT OUTER JOIN my_schedule S ON A.CAL_DAY = S.YYYYMMDD
+			) S
+		GROUP BY S.CAL_DAY,S.DOW
+	</select>
+    
+	
+</mapper>

@@ -3,7 +3,7 @@
  
 <mapper namespace="base.schedule.ScheduleMapper">
 
-	<select id="selectScheduleList" parameterType="String" resultType="java.util.HashMap">
+	<!-- select id="selectScheduleList" parameterType="String" resultType="java.util.HashMap">
 		SELECT S.CAL_DAY /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
 				, S.DOW 
 				, CASE WHEN S.DOW=1 THEN '일요일'
@@ -27,10 +27,53 @@
 							SELECT CAL_DAY + 1 FROM T WHERE DATE_FORMAT(CAL_DAY, '%Y%m%d') &lt; LAST_DAY(DATE_FORMAT(#{yyyymmdd}, '%Y%m%d'))
 						)
 						SELECT * FROM T
-				  ) A LEFT OUTER JOIN my_schedule S ON A.CAL_DAY = S.YYYYMMDD
+				  ) A LEFT OUTER JOIN (
+								SELECT S.YYYYMMDD
+									, S.HH
+									, S.MM
+									, S.SCHEDULE
+							      FROM MY_SCHEDULE S
+							     ORDER BY S.YYYYMMDD, S.HH,S.MM
+							) S ON A.CAL_DAY = S.YYYYMMDD
 			) S
 		GROUP BY S.CAL_DAY,S.DOW
-	</select>
+	</select-->
     
-	
+    <!-- Error querying database. Cause: java.lang.NullPointerException 에러가 발생하면 select 값에 null이 있을경우임. sql 로그를 찍기 위한 
+    net.sf.log4jdbc.sql.jdbcapi.DriverSpy 이녀석이 찍는것이라서 log4j에서 jdbc.resultsettable 을 없애거나 아래와 깉이 coalesce로 null을 ''으로 치환으로 해결 -->
+	<select id="selectScheduleList" parameterType="String" resultType="java.util.HashMap">
+		SELECT /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
+			COALESCE( MIN(CASE WHEN S.DOW=1 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS SUN,
+			COALESCE( MIN(CASE WHEN S.DOW=2 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS MON,
+			COALESCE( MIN(CASE WHEN S.DOW=3 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS TUE,
+			COALESCE( MIN(CASE WHEN S.DOW=4 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS WED,
+			COALESCE( MIN(CASE WHEN S.DOW=5 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS THU,
+			COALESCE( MIN(CASE WHEN S.DOW=6 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS FRI,
+			COALESCE( MIN(CASE WHEN S.DOW=7 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS SAT
+		FROM (
+		SELECT S.CAL_DAY, S.DOW, S.WEEK_DAY
+				, GROUP_CONCAT(S.SCHEDULE) AS SCHEDULE
+		 FROM (
+			SELECT A.CAL_DAY
+			      , DAYOFWEEK( DATE_FORMAT(A.CAL_DAY,'%Y%m%d')) AS DOW
+			      , WEEK(DATE_FORMAT(A.CAL_DAY, '%Y%m%d')) AS WEEK_DAY
+					, S.SCHEDULE
+			  FROM (
+				WITH RECURSIVE T AS (
+				    SELECT DATE_FORMAT(#{yyyymmdd}, '%Y%m01')AS CAL_DAY , WEEK(DATE_FORMAT(#{yyyymmdd}, '%Y%m01')) AS WEEK_DAY
+				    UNION ALL
+				    SELECT CAL_DAY + 1 , WEEK(DATE_FORMAT(CAL_DAY+1, '%Y%m%d')) AS WEEK_DAY from T where DATE_FORMAT(CAL_DAY, '%Y%m%d') &lt; LAST_DAY(DATE_FORMAT(#{yyyymmdd}, '%Y%m%d'))
+				)
+				SELECT * FROM T
+			) A LEFT OUTER JOIN (
+								SELECT S.YYYYMMDD,
+										CONCAT( S.HH	,":", S.MM ," ", S.SCHEDULE) AS SCHEDULE
+								   FROM MY_SCHEDULE S
+								  ORDER BY S.YYYYMMDD, S.HH,S.MM
+						) S ON A.CAL_DAY = S.YYYYMMDD
+		)S
+		GROUP BY S.CAL_DAY, S.DOW, S.WEEK_DAY
+		) S
+		GROUP BY S.WEEK_DAY
+	</select>
 </mapper>

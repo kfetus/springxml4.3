@@ -41,7 +41,7 @@
     
     <!-- Error querying database. Cause: java.lang.NullPointerException 에러가 발생하면 select 값에 null이 있을경우임. sql 로그를 찍기 위한 
     net.sf.log4jdbc.sql.jdbcapi.DriverSpy 이녀석이 찍는것이라서 log4j에서 jdbc.resultsettable 을 없애거나 아래와 깉이 coalesce로 null을 ''으로 치환으로 해결 -->
-	<select id="selectScheduleList" parameterType="String" resultType="java.util.HashMap">
+	<select id="selectScheduleList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT /* UserInfoMapper.selectUserInfoOne 사용자 정보 상세 조회 */
 			COALESCE( MIN(CASE WHEN S.DOW=1 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS SUN,
 			COALESCE( MIN(CASE WHEN S.DOW=2 THEN CONCAT(CAST(SUBSTRING(S.CAL_DAY,7) AS INTEGER),"|", COALESCE(S.SCHEDULE,'')) END) ,'') AS MON,
@@ -69,6 +69,7 @@
 								SELECT S.YYYYMMDD,
 										CONCAT( S.HH	,":", S.MM ," ", S.SCHEDULE) AS SCHEDULE
 								   FROM MY_SCHEDULE S
+								  WHERE S.USER_NO = #{userNo}
 								  ORDER BY S.YYYYMMDD, S.HH,S.MM
 						) S ON A.CAL_DAY = S.YYYYMMDD
 		)S

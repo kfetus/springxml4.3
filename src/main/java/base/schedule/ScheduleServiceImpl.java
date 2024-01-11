@@ -16,9 +16,9 @@ public class ScheduleServiceImpl {
 	@Autowired
 	private ScheduleMapper scheduleMapper;
 	
-	public List<HashMap<String,String>> selectScheduleList(String yyyymmdd) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@@@ selectScheduleList yyyymmdd=" + yyyymmdd);
-		List<HashMap<String,String>> result = scheduleMapper.selectScheduleList(yyyymmdd);
+	public List<HashMap<String,String>> selectScheduleList(HashMap<String,String> paramMap) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ selectScheduleList paramMap=" + paramMap);
+		List<HashMap<String,String>> result = scheduleMapper.selectScheduleList(paramMap);
 		return result;
 	}
 }

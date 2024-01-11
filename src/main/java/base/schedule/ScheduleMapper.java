@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ScheduleMapper {
 
-	public List<HashMap<String,String>> selectScheduleList(String yymmdd);
+	public List<HashMap<String,String>> selectScheduleList(HashMap<String,String> paramMap);
 }

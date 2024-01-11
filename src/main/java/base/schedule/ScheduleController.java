@@ -48,12 +48,13 @@ public class ScheduleController {
 		HashMap<String,String> paramMap = new HashMap<String,String>();
 		
 		String yyyymmdd = map.get("yyyymmdd");
+
 		if( !StringUtils.hasText(yyyymmdd)) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 			Date now = new Date();
 			yyyymmdd = format.format(now);
 		} else {
-			yyyymmdd = yyyymmdd + "01";
+			yyyymmdd = yyyymmdd.replaceAll("-", "").substring(0, 6) + "01";
 		}
 
 		paramMap.put("userNo", String.valueOf(loginVo.getUserNo()));
@@ -64,6 +65,7 @@ public class ScheduleController {
 		retMap.put("RESCODE","0000");
 		retMap.put("RESMSG","");
 		retMap.put("RESULT_DATA",resultList);
+		retMap.put("YYYYMMDD",yyyymmdd.substring(0, 4)+"-"+yyyymmdd.substring(4, 6));
 
 		LOGGER.debug("@@@@@@@@@@@ scheduleCalender 종료"+ retMap);
 		return retMap;

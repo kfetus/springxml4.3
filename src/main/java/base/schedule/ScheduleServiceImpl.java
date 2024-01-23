@@ -22,9 +22,9 @@ public class ScheduleServiceImpl {
 		return result;
 	}
 
-	public List<HashMap<String,String>> selectScheduleOne(String yyyymmdd) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@@@ selectScheduleList yyyymmdd=" + yyyymmdd);
-		List<HashMap<String,String>> result = scheduleMapper.selectScheduleOne(yyyymmdd);
+	public List<HashMap<String,String>> selectScheduleOne(HashMap<String,String> paramMap) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ selectScheduleOne paramMap=" + paramMap);
+		List<HashMap<String,String>> result = scheduleMapper.selectScheduleOne(paramMap);
 		return result;
 	}
 

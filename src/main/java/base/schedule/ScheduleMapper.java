@@ -10,7 +10,7 @@ public interface ScheduleMapper {
 
 	public List<HashMap<String,String>> selectScheduleList(HashMap<String,String> paramMap);
 	
-	public List<HashMap<String,String>> selectScheduleOne(String yyyymmdd);
+	public List<HashMap<String,String>> selectScheduleOne(HashMap<String,String> paramMap);
 	
 	public int deletescheduleOne(String yyyymmdd, String hh, String mm);
 	

@@ -96,7 +96,11 @@ public class ScheduleController {
 			return retMap;
 		}
 
-		List<HashMap<String,String>> resultList = scheduleService.selectScheduleOne(yyyymmdd);
+		HashMap<String,String> paramMap = new HashMap<String,String>();
+		paramMap.put("yyyymmdd", yyyymmdd);
+		paramMap.put("userNo", String.valueOf(loginVo.getUserNo()));
+		
+		List<HashMap<String,String>> resultList = scheduleService.selectScheduleOne(paramMap);
 
 		retMap.put("RESCODE","0000");
 		retMap.put("RESMSG","");

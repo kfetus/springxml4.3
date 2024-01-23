@@ -83,8 +83,9 @@
 				, S.HH
 				, S.MM
 				, S.SCHEDULE
-		  FROM my_schedule S
+		  FROM MY_SCHEDULE S
 		 WHERE S.YYYYMMDD = #{yyyymmdd}
+		   AND S.USER_NO = #{userNo}
 		ORDER BY S.YYYYMMDD, S.HH,S.MM
 	</select>
 

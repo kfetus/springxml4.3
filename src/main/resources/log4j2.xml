@@ -27,6 +27,7 @@
         </Logger-->
         <Logger name="base" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
+            <AppenderRef ref="File" />
         </Logger>
         <Logger name="org.springframework" level="INFO" additivity="false">
             <AppenderRef ref="console" />

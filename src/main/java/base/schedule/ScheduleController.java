@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import base.util.SessionManager;
 import base.vo.UserVO;
 
@@ -70,4 +73,80 @@ public class ScheduleController {
 		LOGGER.debug("@@@@@@@@@@@ scheduleCalender 종료"+ retMap);
 		return retMap;
 	}
+	
+	
+	@RequestMapping(value = "/scheduleOne.do")
+	public Map<String,Object> selectScheduleOne(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ selectScheduleOne 시작=" + map);
+		
+		Map<String , Object> retMap = new HashMap<String,Object>();
+
+		UserVO loginVo = sessionManager.getUserInfo(req);
+		if (loginVo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			return retMap;
+		}		
+		
+		String yyyymmdd = map.get("yyyymmdd");
+
+		if( !StringUtils.hasText(yyyymmdd)) {
+			retMap.put("RESCODE","9999");
+			retMap.put("RESMSG","조회하려는 날짜를 선택해 주세요.");
+			return retMap;
+		}
+
+		List<HashMap<String,String>> resultList = scheduleService.selectScheduleOne(yyyymmdd);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_DATA",resultList);
+
+		LOGGER.debug("@@@@@@@@@@@ selectScheduleOne 종료"+ retMap);
+		return retMap;
+	}
+
+	
+	@RequestMapping(value = "/scheduleUpdate.do")
+	public Map<String,Object> scheduleInsert(@RequestBody  HashMap<String,String> map, HttpServletRequest req) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@ scheduleUpdate 시작=" + map);
+		
+		Map<String , Object> retMap = new HashMap<String,Object>();
+
+		UserVO loginVo = sessionManager.getUserInfo(req);
+ 
+		if (loginVo == null) {
+			retMap.put("RESCODE","9998");
+			retMap.put("RESMSG","로그인 정보가 없습니다.");
+			return retMap;
+		}		
+		
+		String yyyymmdd = map.get("yyyymmdd");
+		String strList = map.get("scheduleList");
+
+		if( !StringUtils.hasText(yyyymmdd)) {
+			retMap.put("RESCODE","9999");
+			retMap.put("RESMSG","변경하려는 날짜를 선택해 주세요.");
+			return retMap;
+		}
+
+		ObjectMapper om = new ObjectMapper();
+		List<HashMap<String,String>> paramList = om.readValue(strList, new TypeReference<List<HashMap<String,String>>>() {});
+		LOGGER.debug("@@@@@@@@@@@ scheduleUpdate =" + paramList.size());
+		LOGGER.debug("@@@@@@@@@@@ scheduleUpdate =" + paramList);
+		for ( int i = 0 ; i < paramList.size();i++) {
+			paramList.get(i).put("userNo", String.valueOf(loginVo.getUserNo()));
+		}
+		
+
+		int result = scheduleService.insertSchedule(paramList,yyyymmdd);
+
+		retMap.put("RESCODE","0000");
+		retMap.put("RESMSG","");
+		retMap.put("RESULT_DATA",result);
+
+		LOGGER.debug("@@@@@@@@@@@ scheduleUpdate 종료"+ retMap);
+		return retMap;
+	}
+
 }

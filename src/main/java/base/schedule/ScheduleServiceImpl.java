@@ -21,4 +21,36 @@ public class ScheduleServiceImpl {
 		List<HashMap<String,String>> result = scheduleMapper.selectScheduleList(paramMap);
 		return result;
 	}
+
+	public List<HashMap<String,String>> selectScheduleOne(String yyyymmdd) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ selectScheduleList yyyymmdd=" + yyyymmdd);
+		List<HashMap<String,String>> result = scheduleMapper.selectScheduleOne(yyyymmdd);
+		return result;
+	}
+
+	public int insertSchedule(List<HashMap<String,String>> list, String yyyymmdd) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ scheduleUpdate list=" + list);
+		
+		scheduleMapper.deletescheduleDay(yyyymmdd);
+		
+		int result = scheduleMapper.insertSchedule(list);
+		
+		return result;
+		
+	}
+
+	
+	/**
+	 * @설명 : 스케쥴 update and insert.
+	 *  이 로직에서는 맞지 않는게 pk가 년월일,시,분 으로 설계했기 때문에 화면에서 시,분 만 바꿀경우 삭제 추가가 아니고 추가만 된다. 
+	 * @param list
+	 * @return
+	 * @throws Exception
+	 */
+	public int upsertSchedule(List<HashMap<String,String>> list) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ scheduleUpdate list=" + list);
+		int result = scheduleMapper.upsertSchedule(list);
+		return result;
+		
+	}
 }

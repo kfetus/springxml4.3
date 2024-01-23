@@ -9,4 +9,14 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ScheduleMapper {
 
 	public List<HashMap<String,String>> selectScheduleList(HashMap<String,String> paramMap);
+	
+	public List<HashMap<String,String>> selectScheduleOne(String yyyymmdd);
+	
+	public int deletescheduleOne(String yyyymmdd, String hh, String mm);
+	
+	public int deletescheduleDay(String yyyymmdd);
+	
+	public int insertSchedule(List<HashMap<String,String>> list);
+	
+	public int upsertSchedule(List<HashMap<String,String>> list);
 }

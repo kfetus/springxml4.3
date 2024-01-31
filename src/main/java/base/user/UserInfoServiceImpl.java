@@ -36,7 +36,7 @@ public class UserInfoServiceImpl {
 		return result;
 	}
 	
-	public UserVO selectUserInfoOne(int userNo) throws Exception {
+	public UserVO selectUserInfoOne(String userNo) throws Exception {
 		UserVO vo = userInfoMapper.selectUserInfoOne(userNo);
 		return vo;
 	}

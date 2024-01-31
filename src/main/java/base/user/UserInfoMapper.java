@@ -9,7 +9,7 @@ public interface UserInfoMapper {
 
 	public int checkDupIdOne(UserVO vo);
 	
-	public UserVO selectUserInfoOne(int userNo);
+	public UserVO selectUserInfoOne(String userNo);
 
 	public int insertUserInfoOne(UserVO vo);
 	

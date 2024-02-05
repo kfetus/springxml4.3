@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import base.login.LoginMapper;
+import base.util.crypto.Sha256Crypto;
 import base.vo.UserVO;
 
 @Service("userInfoService")
@@ -27,6 +28,10 @@ public class UserInfoServiceImpl {
 	
 	public int insertUserInfoOne(UserVO vo) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ insertUserInfoOne data=" + vo.toString());
+		
+		String salt = Sha256Crypto.getSalt();
+		vo.setSalt(salt);
+		vo.setUserPass(Sha256Crypto.encSah256(vo.getUserPass(), salt));
 		
 		loginMapper.insertLoginInfoOne(vo);
 		if( !StringUtils.hasText(vo.getRegId()) ) {

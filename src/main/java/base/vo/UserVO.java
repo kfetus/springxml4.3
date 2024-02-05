@@ -4,6 +4,7 @@ public class UserVO {
 
 	private String userId;
 	private String userPass;
+	private String salt;
 	private String userName;
 	private int userNo;
 	private String userIp;
@@ -41,6 +42,12 @@ public class UserVO {
 	}
 	public void setUserPass(String userPass) {
 		this.userPass = userPass;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	public String getUserName() {
 		return userName;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.SessionManager;
+import base.util.crypto.Sha256Crypto;
 import base.vo.UserVO;
 
 /**
@@ -52,19 +53,25 @@ public class LoginController {
 
 		UserVO vo2 = loginService.selectOneUserVo(vo);
 		LOGGER.debug("@@@@@@@@@@@ restLogin after="+vo2);
+		
 		if( vo2 == null) {
 			retMap.put("RESCODE","0001");
 			retMap.put("RESMSG","사용자가 없습니다.");
 			return retMap;
-			
 		} else {
-			retMap.put("RESCODE","0000");
-			retMap.put("RESMSG","");
-//			vo.setUserIp((null != req.getHeader("X-FORWARDED-FOR")) ? req.getHeader("X-FORWARDED-FOR") : req.getRemoteAddr());
-			vo2.setUserPass("");
-			retMap.put("userInfo", vo2);
-			
-			sessionManager.createUserInfo(req, vo2);
+			String sha256pass = Sha256Crypto.encSah256(vo.getUserPass(), vo2.getSalt());
+			if(vo2.getUserPass().equals(sha256pass)) {
+				retMap.put("RESCODE","0000");
+				retMap.put("RESMSG","");
+//				vo.setUserIp((null != req.getHeader("X-FORWARDED-FOR")) ? req.getHeader("X-FORWARDED-FOR") : req.getRemoteAddr());
+				vo2.setUserPass("");
+				retMap.put("userInfo", vo2);
+				sessionManager.createUserInfo(req, vo2);
+			} else {
+				retMap.put("RESCODE","0001");
+				retMap.put("RESMSG","사용자가 없습니다.");
+				return retMap;
+			}
 		}
 
 		LOGGER.debug("@@@@@@@@@@@ restLogin 종료"+sessionManager.getUserInfo(req));

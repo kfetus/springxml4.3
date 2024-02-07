@@ -78,6 +78,24 @@ ENGINE=InnoDB
 ;
 
 
+CREATE TABLE `board_add_file` (
+	`SEQ` INT(8) NOT NULL COMMENT 'PK 순번',
+	`FILE_SEQ` INT(8) NOT NULL COMMENT '첨부파일 순번',
+	`FILE_NAME` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '첨부파일 명' COLLATE 'utf8mb4_general_ci',
+	`FILE_DATA` BLOB NOT NULL COMMENT '파일내용',
+	`FILE_SIZE` INT(20) NOT NULL COMMENT '파일용량',
+	`FILE_EXTENSION` VARCHAR(4) NULL DEFAULT NULL COMMENT '파일확장자' COLLATE 'utf8mb4_general_ci',
+	`REG_DT` DATETIME NULL DEFAULT current_timestamp() COMMENT '생성일',
+	`CNG_DT` DATETIME NULL DEFAULT current_timestamp() COMMENT '수정일',
+	PRIMARY KEY (`SEQ`, `FILE_SEQ`) USING BTREE
+)
+COMMENT='기본게시판 첨부파일'
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+
+
 CREATE TABLE `system_menu` (
 	`URL` VARCHAR(100) NOT NULL COMMENT '메뉴  URL' COLLATE 'utf8mb4_bin',
 	`SYS_GROUP` VARCHAR(3) NOT NULL COMMENT '시스템 그룹 PCW , MOW, APP' COLLATE 'utf8mb4_bin',

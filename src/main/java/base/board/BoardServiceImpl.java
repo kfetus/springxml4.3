@@ -18,9 +18,18 @@ public class BoardServiceImpl {
 
 	public int insertBoardOne(HashMap<String,String> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ insertBoardOne data=" + map);
-		int result = boardMapper.insertBoardOne(map);
+		boardMapper.insertBoardOne(map);
+		String boardSeq = String.valueOf(map.get("boardSeq"));
+		int result = Integer.parseInt(boardSeq);
 		return result;
 	}
+	
+	public int insertBoardFile(HashMap<String,Object> map) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ insertBoardFile data=" + map);
+		int result = boardMapper.insertBoardFile(map);
+		return result;
+	}
+	
 	
 	public List<HashMap<String,String>> selectBoardList(HashMap<String,String> map) throws Exception {
 		List<HashMap<String,String>> result = boardMapper.selectBoardList(map);
@@ -32,6 +41,12 @@ public class BoardServiceImpl {
 		return result;
 	}
 
+	public HashMap<String,Object> selectBoardFileOne(HashMap<String,String> map) throws Exception {
+		HashMap<String,Object> result = boardMapper.selectBoardFileOne(map);
+		return result;
+	}
+	
+	
 	public int updateBoardOne(HashMap<String,String> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ updateBoardOne map=" + map);
 		int result = boardMapper.updateBoardOne(map);
@@ -40,8 +55,9 @@ public class BoardServiceImpl {
 	
 	public int deleteBoardOne(String seq) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ key=" + seq);
-		int result = boardMapper.deleteBoardOne(seq);
-		return result;
+		boardMapper.deleteBoardOne(seq);
+		int delRes = boardMapper.deleteBoardFile(seq);
+		return delRes;
 	}
 	
 

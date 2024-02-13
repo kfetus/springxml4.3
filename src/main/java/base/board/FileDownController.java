@@ -24,13 +24,13 @@ public class FileDownController {
 
 	/**
 	 * 
-	 * @설명 : 일반적인 파일 다운로드
+	 * @설명 : DB BLOB 파일 다운로드
 	 * @param map
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/normalFiledown.do")
-	public void normalFiledown(@RequestParam HashMap<String, String> map, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/blobFiledown.do")
+	public void blobFiledown(@RequestParam HashMap<String, String> map, HttpServletResponse response) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ normalFiledown 시작=" + map);
 
 		HashMap<String, Object> resultData = boardService.selectBoardFileOne(map);

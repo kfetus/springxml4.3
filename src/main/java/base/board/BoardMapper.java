@@ -15,7 +15,7 @@ public interface BoardMapper {
 	
 	public HashMap<String,Object> selectBoardFileOne(HashMap<String,String> map);
 
-	public int insertBoardOne(HashMap<String,String> map);
+	public int insertBoardOne(HashMap<String,Object> map);
 	
 	public int insertBoardFile(HashMap<String,Object> map);
 	

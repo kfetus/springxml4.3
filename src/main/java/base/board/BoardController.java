@@ -1,6 +1,5 @@
 package base.board;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,11 +144,11 @@ public class BoardController {
 	
 	@RequestMapping(value = "/insertBoardOne.do")
 	public Map<String, Object> insertBoardOne(@RequestParam String title,@RequestParam String bodyText,@RequestParam String category
-			,@RequestPart MultipartFile multiFiles, HttpServletRequest req) throws Exception {
+			,@RequestPart(required = false)  MultipartFile multiFiles, HttpServletRequest req) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ insertBoardOne 시작 @@@@@@@@@@@");
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("title",title);
 		map.put("bodyText",bodyText);
 		map.put("category",category);
@@ -162,11 +161,13 @@ public class BoardController {
 			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
 			return retMap;
 		} else {
-			map.put("userNo", vo.getUserNo() + "");
+			map.put("userNo", String.valueOf(vo.getUserNo()));
 		}
-		// insert pk
+		map.put("multiFiles", multiFiles);
+		
+		
 		int result = boardService.insertBoardOne(map);
-
+/*
 		LOGGER.debug("@@@@@@@@@@@ insertBoardOne multiFiles=" + multiFiles);
 		if(multiFiles != null) {
 			HashMap<String, Object> fileMap = new HashMap<String, Object>();
@@ -194,7 +195,7 @@ public class BoardController {
 		}
 		
 		LOGGER.debug("@@@@@@@@@@@ insertBoardOne result" + result);
-
+*/
 		retMap.put("RESCODE", "0000");
 		retMap.put("RESMSG", "");
 		retMap.put("RESULT_CNT", result);

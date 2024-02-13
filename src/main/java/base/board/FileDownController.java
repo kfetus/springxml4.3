@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,26 +21,6 @@ public class FileDownController {
 	@Autowired
 	private BoardServiceImpl boardService;
 
-	
-	@RequestMapping(value = "/boardFileOne.do")
-	public ResponseEntity<byte[]> selectBoardFileOne(@RequestParam HashMap<String, String> map) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@ selectBoardFileOne 시작=" + map);
-
-		HashMap<String, Object> resultData = boardService.selectBoardFileOne(map);
-		LOGGER.debug("@@@@@@@@@@@ selectBoardFileOne DB 조회 결과=" + resultData);
-		
-	    byte[] fileData = (byte[]) resultData.get("FILE_DATA");
-		
-	    if (fileData != null) {
-//	      ByteArrayResource resource = new ByteArrayResource(fileData);
-	      return ResponseEntity.ok()
-	          .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	          .contentLength(fileData.length)
-	          .body(fileData);
-	    } else {
-	      return ResponseEntity.notFound().build();
-	    }		
-	}
 
 	/**
 	 * 

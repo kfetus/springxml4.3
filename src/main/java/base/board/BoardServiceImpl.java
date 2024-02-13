@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("boardService")
 public class BoardServiceImpl {
@@ -16,11 +17,36 @@ public class BoardServiceImpl {
 	@Autowired
 	private BoardMapper boardMapper;
 
-	public int insertBoardOne(HashMap<String,String> map) throws Exception {
+	public int insertBoardOne(HashMap<String,Object> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@@@ insertBoardOne data=" + map);
+		
 		boardMapper.insertBoardOne(map);
 		String boardSeq = String.valueOf(map.get("boardSeq"));
 		int result = Integer.parseInt(boardSeq);
+
+		MultipartFile multiFiles = (MultipartFile)map.get("multiFiles");
+		if(multiFiles != null) {
+			HashMap<String, Object> fileMap = new HashMap<String, Object>();
+
+			String originalFilename = multiFiles.getOriginalFilename();
+			int pointIndex = originalFilename.lastIndexOf(".");
+			String fileExtension = originalFilename.substring(pointIndex + 1);
+			String fileName = originalFilename.substring(0, pointIndex);
+			long fileSize = multiFiles.getSize(); // 파일 사이즈
+			LOGGER.debug("fileName= " + fileName);
+			LOGGER.debug("fileExtension= " + fileExtension);
+			LOGGER.debug("fileSize= " + fileSize);
+			
+			fileMap.put("boardSeq", result);
+			fileMap.put("fileName", fileName);
+			fileMap.put("fileData", multiFiles.getBytes());
+			fileMap.put("fileSize", fileSize);
+			fileMap.put("fileExtension", fileExtension);
+			
+			insertBoardFile(fileMap);
+		}
+
+		
 		return result;
 	}
 	

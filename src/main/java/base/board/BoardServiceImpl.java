@@ -51,13 +51,19 @@ public class BoardServiceImpl {
 	}
 	
 	public int insertBoardFile(HashMap<String,Object> map) throws Exception {
-		LOGGER.debug("@@@@@@@@@@@@@ insertBoardFile data=" + map);
+		LOGGER.debug("@@@@@@@@@@@@@ insertBoardFile param data=" + map);
 		int result = boardMapper.insertBoardFile(map);
 		return result;
 	}
 	
 	
-	public List<HashMap<String,String>> selectBoardList(HashMap<String,String> map) throws Exception {
+	public int selectBoardListCnt(HashMap<String,Object> map) throws Exception {
+		LOGGER.debug("@@@@@@@@@@@@@ selectBoardListCnt param data=" + map);
+		int result = boardMapper.selectBoardListCnt(map);
+		return result;
+	}
+	
+	public List<HashMap<String,String>> selectBoardList(HashMap<String,Object> map) throws Exception {
 		List<HashMap<String,String>> result = boardMapper.selectBoardList(map);
 		return result;
 	}

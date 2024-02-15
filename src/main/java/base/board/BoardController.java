@@ -36,22 +36,45 @@ public class BoardController {
 	private BoardServiceImpl boardService;
 
 	@RequestMapping(value = "/boardList.do")
-	public Map<String, Object> boardList(@RequestBody HashMap<String, String> map) throws Exception {
+	public Map<String, Object> boardList(@RequestBody HashMap<String, Object> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ boardList 시작=" + map);
 		Map<String, Object> retMap = new HashMap<String, Object>();
 
-		List<HashMap<String, String>> resultList = boardService.selectBoardList(map);
-
-		if (resultList.size() == 0) {
+		int totalCnt = boardService.selectBoardListCnt(map);
+		
+		int nowPage = 0;
+		int pageListCnt = 5;
+		int startIdx = 0;
+		
+		if (totalCnt == 0) {
 			retMap.put("RESCODE", "0000");
 			retMap.put("RESMSG", "데이타 없습니다.");
 			retMap.put("RESULT_SIZE", "0");
 			return retMap;
 		} else {
+			
+			if( !StringUtils.isEmpty(map.get("nowPage")) && StringUtils.hasText(String.valueOf(map.get("nowPage")))) {
+				nowPage = Integer.parseInt(String.valueOf(map.get("nowPage")));
+				if(nowPage > 0) {
+					nowPage = nowPage -1;
+				}
+			}
+			if( !StringUtils.isEmpty(map.get("pageListCnt")) && StringUtils.hasText(String.valueOf(map.get("pageListCnt")))) {
+				pageListCnt = Integer.parseInt(String.valueOf(map.get("pageListCnt")));
+			}
+			
+			
+			startIdx = nowPage * pageListCnt;
+			map.put("startIdx", startIdx);
+			map.put("pageListCnt", pageListCnt);
+			List<HashMap<String, String>> resultList = boardService.selectBoardList(map);
+
+			
 			retMap.put("RESCODE", "0000");
 			retMap.put("RESMSG", "");
 			retMap.put("RESULT_SIZE", resultList.size());
 			retMap.put("RESULT_LIST", resultList);
+			retMap.put("RESULT_TOTAL_CNT", totalCnt);
 		}
 
 		LOGGER.debug("@@@@@@@@@@@ boardList 종료" + retMap);

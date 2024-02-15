@@ -8,8 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BoardMapper {
 
+	public int selectBoardListCnt(HashMap<String,Object> map);
 	
-	public List<HashMap<String,String>> selectBoardList(HashMap<String,String> map);
+	public List<HashMap<String,String>> selectBoardList(HashMap<String,Object> map);
 
 	public HashMap<String,String> selectBoardOne(String seq);
 	

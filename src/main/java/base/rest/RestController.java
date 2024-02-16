@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.comm.exception.BaseException;
+
 /**
  * 
  * @author ojh
@@ -64,6 +66,19 @@ public class RestController {
 
 		LOGGER.debug("@@@@@@@@@@@ restBaseModel 종료");
 		return map;
+	}
+
+	/**
+	 * 
+	 * @설명 : 에러 페이지 테스트 중 ControllerAdvice로 처리해도 되나 일단 귀찮음
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/restBaseError.do")
+	public Map<String,String> restBaseError(@RequestBody Map<String, String> map) throws Exception{
+		LOGGER.debug("@@@@@@@@@@@ restBaseError 시작="+map);
+		throw new BaseException("이런 메세지를 넣으세요","9990");
 	}
 
 }

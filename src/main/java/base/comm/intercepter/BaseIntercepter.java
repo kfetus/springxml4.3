@@ -22,8 +22,9 @@ public class BaseIntercepter extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ intercepter preHandle" + request.getRequestURI());
-
+		LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ intercepter preHandle request.getRequestURI()=" + request.getRequestURI());
+		LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ intercepter preHandle request.getContentType()=" + request.getContentType());
+		
 		LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ parameter ######");
         Enumeration<?> en = request.getParameterNames();
         while(en.hasMoreElements()) {
@@ -31,14 +32,14 @@ public class BaseIntercepter extends HandlerInterceptorAdapter {
         	LOGGER.debug("key : " + paramKey +";value="+request.getParameter(paramKey));
         }
 /*
-        log.debug("¿¿¿¿¿¿¿¿¿¿¿¿ Attribute ¿¿¿¿¿¿¿¿¿¿¿¿");
+        LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ Attribute ¿¿¿¿¿¿¿¿¿¿¿¿");
 		Enumeration<?> attrNames = request.getAttributeNames();
 		while (attrNames.hasMoreElements()) {
 			String attrName = (String) attrNames.nextElement();
         	LOGGER.debug("key : " + attrName +";value="+request.getAttribute(attrName));
 
 		}
-		log.debug("¿¿¿¿¿¿¿¿¿¿¿¿ session ¿¿¿¿¿¿¿¿¿¿¿¿");
+		LOGGER.debug("¿¿¿¿¿¿¿¿¿¿¿¿ session ¿¿¿¿¿¿¿¿¿¿¿¿");
 		Enumeration<?> sessNames = request.getSession().getAttributeNames();
 		while (sessNames.hasMoreElements()) {
 			String sessName = (String) attrNames.nextElement();

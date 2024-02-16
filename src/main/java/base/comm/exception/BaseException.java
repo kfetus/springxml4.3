@@ -10,6 +10,8 @@ public class BaseException extends Exception {
 
 	String message;
 	
+	String errorCode;
+	
 	public String getMessage() {
 		return message;
 	}
@@ -18,14 +20,33 @@ public class BaseException extends Exception {
 		return this.message = defaultMessage;
 	}
 
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	
 	public BaseException(String defaultMessage) {
 		this.message = defaultMessage;
 	}
-	
+
+	public BaseException(String message, String code) {
+		this.message = message;
+		this.errorCode = code;
+	}
+
 	public BaseException(String defaultMessage,Throwable throwable) {
 		super(defaultMessage, throwable);
 	}
 
+	public BaseException(String defaultMessage, String code ,Throwable throwable) {
+		super(defaultMessage, throwable);
+		this.errorCode = code;
+	}
+	
 	public BaseException(MessageSource messageSource, String messageKey, Object[] messageParameters, String defaultMessage, Locale locale, Throwable throwable) {
 		super(throwable);
 

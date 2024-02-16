@@ -2,6 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
+<%
+	System.out.println(request.getContentType());
+	String contentType = request.getContentType();
+	if ("application/json".equals(contentType)) {
+%>
+{"RESMSG":"${exception.message}","RESCODE":"${exception.errorCode}"}
+<%
+	} else {
+%>
 <!DOCTYPE html> 
 <html> 
     <head>
@@ -45,4 +55,11 @@
         <!-- page end -->   
         		
   	</body>
-</html>                               
+</html>
+<%
+	}
+%>
+
+
+
+               

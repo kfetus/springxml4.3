@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:context="http://www.springframework.org/schema/context"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<context:component-scan base-package="base">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
@@ -21,5 +24,9 @@
 		</property>
 	</bean>
 
+	<!-- 운영, 테스트 나눌때 톰켓 스탙 쉘에 -Dactivemode=test 추가해 주고 아래 설정을 적용하면 횜 그러면 msg_test.properties 파일이 로드 됨
+	     <util:properties id="config" location="classpath:/config/properties/msg_#{systemProperties['activemode']}.properties"/> -->
+	<util:properties id="controlsite" location="classpath:/config/properties/controlSite.properties"/>
+	<util:properties id="msg" location="classpath:/config/properties/msg.properties"/>
       
 </beans>

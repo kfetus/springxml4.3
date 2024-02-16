@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import base.util.FileUtil;
 import base.util.SessionManager;
 import base.vo.UserVO;
 
@@ -35,11 +37,20 @@ public class BoardController {
 	@Autowired
 	private BoardServiceImpl boardService;
 
+	@Value("#{controlsite['file.sample']}")
+	private String filesample;
+
+	@Value("#{msg['msg.hi']}")
+	public String msghi;
+
 	@RequestMapping(value = "/boardList.do")
 	public Map<String, Object> boardList(@RequestBody HashMap<String, Object> map) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ boardList 시작=" + map);
 		Map<String, Object> retMap = new HashMap<String, Object>();
 
+		LOGGER.debug("@@@@@@@@@@@ boardList filesample=" + filesample);
+		LOGGER.debug("@@@@@@@@@@@ boardList msghi=" + msghi);
+		
 		int totalCnt = boardService.selectBoardListCnt(map);
 		
 		int nowPage = 0;
@@ -170,6 +181,14 @@ public class BoardController {
 			,@RequestPart(required = false)  MultipartFile multiFiles, HttpServletRequest req) throws Exception {
 		LOGGER.debug("@@@@@@@@@@@ insertBoardOne 시작 @@@@@@@@@@@");
 		Map<String, Object> retMap = new HashMap<String, Object>();
+		
+		boolean checkState = FileUtil.checkUploadFileExtension(multiFiles);
+		if(!checkState) {
+			retMap.put("RESCODE", "9998");
+			retMap.put("RESMSG", "잘못된 파일을 업로드 하였습니다."+multiFiles.getOriginalFilename());
+			LOGGER.debug("@@@@@@@@@@@ insertBoardOne 에러발생=" + retMap);
+			return retMap;
+		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("title",title);

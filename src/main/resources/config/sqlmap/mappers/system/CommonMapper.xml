@@ -8,8 +8,9 @@
 			SELECT URL
 				, PARENT_URL
 				, MENU_NAME
-				, 1 AS LEVEL
-				, CONCAT(MENU_LEVEL,'-',ORDER_NUM) AS ORDER_LEVEL
+				, MENU_LEVEL
+				, ORDER_NUM
+				, URL AS ORDER_STR
 			  FROM SYSTEM_MENU
 			 WHERE USE_YN = 'Y'
 			   AND URL = '/'
@@ -17,19 +18,21 @@
 			SELECT A.URL
 				, A.PARENT_URL
 				, A.MENU_NAME
-				, 1 + LEVEL AS LEVEL
-				, CONCAT(A.MENU_LEVEL,'-',A.ORDER_NUM) AS ORDER_LEVEL
+				, A.MENU_LEVEL
+				, A.ORDER_NUM
+				, CONCAT(B.ORDER_STR,'->',A.URL) AS ORDER_STR
 			  FROM SYSTEM_MENU A
-			 INNER JOIN menu ON A.PARENT_URL = menu.URL
+			 INNER JOIN menu B ON A.PARENT_URL = B.URL
 			 WHERE A.USE_YN = 'Y'
 		)
 		SELECT URL
 			, PARENT_URL
 			, MENU_NAME
-			, LEVEL
-			, ORDER_LEVEL
+			, MENU_LEVEL
+			, ORDER_NUM
+			, ORDER_STR
 		  FROM menu
-		 ORDER BY ORDER_LEVEL
+		 ORDER BY ORDER_STR, ORDER_NUM
     </select>
 <!-- 
 		SELECT /* MenuMapper.selectMenuList 메뉴 조회 */

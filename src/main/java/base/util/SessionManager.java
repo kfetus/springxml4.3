@@ -16,6 +16,7 @@ public class SessionManager {
 		HttpSession session =  req.getSession();
 		session.removeAttribute(USER_INFO);
 		session.setAttribute(USER_INFO, vo);
+		session.setMaxInactiveInterval(600);//10분
 	}
 
 	public UserVO getUserInfo(HttpServletRequest req) {
@@ -27,6 +28,7 @@ public class SessionManager {
 	public void removeUserInfo(HttpServletRequest req) {
 		HttpSession session =  req.getSession();
 		session.removeAttribute(USER_INFO);
+		session.invalidate();
 	}
 	
 }

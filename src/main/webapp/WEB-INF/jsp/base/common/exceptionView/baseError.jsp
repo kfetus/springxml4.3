@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%
-	System.out.println(request.getContentType());
+	System.out.println("baseError.jsp=>"+request.getContentType());
 	String contentType = request.getContentType();
 	if ("application/json".equals(contentType)) {
 %>

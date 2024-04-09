@@ -17,6 +17,7 @@ public class BaseExceptionResolver extends SimpleMappingExceptionResolver{
 		ex.printStackTrace();
 		
 		String viewName = determineViewName(ex, request);
+		logger.error("¿¿¿¿¿¿¿¿¿¿¿¿ BaseExceptionResolver.doResolveException viewNam="+viewName);
 		if (viewName != null) {
 			Integer statusCode = determineStatusCode(request, viewName);
 			if (statusCode != null) {
